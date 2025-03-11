@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf5pqakh8lbt1"]
+
+[ext_resource type="Script" path="res://init/init.gd" id="1_safuf"]
+
+[node name="Init" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_safuf")
+
+[node name="CreateBG" type="Panel" parent="."]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreateBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -29.0
+offset_right = 68.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CreateBG/VBoxContainer"]
+layout_mode = 2
+text = "Create/Join Room"
+horizontal_alignment = 1
+
+[node name="Username" type="LineEdit" parent="CreateBG/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Username"
+
+[node name="SpinBox" type="SpinBox" parent="CreateBG/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 65535.0
+prefix = "Port"
+
+[node name="Join" type="Button" parent="CreateBG/VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Join"
+
+[node name="UpdateChecker" type="Node" parent="."]
+
+[connection signal="text_changed" from="CreateBG/VBoxContainer/Username" to="." method="_on_username_text_changed"]
+[connection signal="pressed" from="CreateBG/VBoxContainer/Join" to="." method="_on_join_button_pressed"]

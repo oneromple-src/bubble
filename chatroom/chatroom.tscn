@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://dea6giykki6kq"]
+
+[ext_resource type="Script" path="res://chatroom/chatroom.gd" id="1_kmm3q"]
+[ext_resource type="Script" path="res://chatroom/server.gd" id="2_dycil"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olv2w"]
+bg_color = Color(0.149475, 0.149475, 0.149474, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wrs8o"]
+properties/0/path = NodePath("Panel/VBoxContainer/Chatbox:text")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Server:host_exists")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Panel/VBoxContainer/OnlineText:text")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kmm3q")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_olv2w")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Chatbox" type="RichTextLabel" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "=== CHATROOM ===
+"
+
+[node name="OnlineText" type="Label" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Online: 0 "
+horizontal_alignment = 2
+
+[node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = " Message"
+
+[node name="Synchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wrs8o")
+
+[node name="Server" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_dycil")
+
+[connection signal="text_submitted" from="Panel/VBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
